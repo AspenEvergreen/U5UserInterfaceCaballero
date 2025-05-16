@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5822991108921804860}
   m_Layer: 0
   m_Name: SmallBomb
-  m_TagString: Untagged
+  m_TagString: bad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -169,3 +169,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointVal: -5
+  boomPart: {fileID: 7535607469619513247, guid: ac10190cf200c4f7e881ca8e41d3d760, type: 3}
+  gameAct: 0

@@ -5,13 +5,16 @@ using UnityEngine;
 public class Target : MonoBehaviour
 {
     private Rigidbody trb;
-    private float minS = 12;
-    private float maxS = 16;
+    private float minS = 14;
+    private float maxS = 18;
     private float maxT = 10;
     private float xR = 4;
     private float ySPos = -6;
     private GManager gManager;
     public int pointVal;
+    public ParticleSystem boomPart;
+
+    public bool gameAct;
 
     // Start is called before the first frame update
     void Start()
@@ -50,12 +53,21 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Destroy(gameObject);
-        gManager.UpdateScore(pointVal);
+        if(gManager.gameAct)
+        {
+            Destroy(gameObject);
+            Instantiate(boomPart, transform.position, boomPart.transform.rotation);
+            gManager.UpdateScore(pointVal);
+        }
+        
     }
 
     private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
+        if (!gameObject.CompareTag("bad"))
+        {
+            gManager.UpdateLives();
+        }
     }
 }
