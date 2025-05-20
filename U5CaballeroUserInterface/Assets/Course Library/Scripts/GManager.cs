@@ -21,9 +21,14 @@ public class GManager : MonoBehaviour
     public GameObject titleScreen;
     public int lives;
 
+    public GameObject pauseScreen;
+    public bool pause;
+    
+
+
     public void StartGame(int diff)
     {
-        
+        lives = 3;
         UpdateLives();
         titleScreen.gameObject.SetActive(false);
         gameAct = true;
@@ -31,6 +36,7 @@ public class GManager : MonoBehaviour
         score = 0;
         spawnRate /= diff;
         UpdateScore(0);
+        livesText.text = "Lives: " + lives;
     }
 
     // Start is called before the first frame update
@@ -42,7 +48,28 @@ public class GManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Paused();
+    }
+
+    public void Paused()
+    {
+        if(Input.GetKeyDown(KeyCode.Space)&&gameAct && !pause)
+        {
+            pause = true;
+            gameAct = false;
+            Time.timeScale = 0.0f;
+            pauseScreen.SetActive(true);
+            Debug.Log("paue");
+        }
+
+        else if(Input.GetKeyDown(KeyCode.Space)&&!gameAct &&pause)
+        {
+            pause = false;
+            gameAct = true;
+            Time.timeScale = 1.0f;
+            pauseScreen.SetActive(false);
+            Debug.Log("uno");
+        }
     }
 
     IEnumerator SpawnTarget()
@@ -72,6 +99,7 @@ public class GManager : MonoBehaviour
             if (lives < 0)
             {
                 gameAct = false;
+                GameOver();
             }
         }
     }
@@ -79,8 +107,8 @@ public class GManager : MonoBehaviour
     public void GameOver()
     {
         overText.gameObject.SetActive(true);
-        gameAct = false;
         reStartG.gameObject.SetActive(true);
+        
     }
 
     public void ReGame()
